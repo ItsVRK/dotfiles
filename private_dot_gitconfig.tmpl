@@ -1,0 +1,39 @@
+[user]
+	name = {{ .fullname }}
+	email = {{ .email }}
+{{- if lookPath "op" }}
+	signingkey = {{ onepasswordRead "op://Private/SSH Signing Key/public key" }}
+{{- end }}
+[init]
+	defaultBranch = main
+[core]
+	ignorecase = false
+	autocrlf = input
+	untrackedCache = true
+[feature]
+	manyFiles = true
+[pull]
+	rebase = true
+[push]
+	autoSetupRemote = true
+[fetch]
+	prune = true
+[diff]
+	colorMoved = default
+[merge]
+	conflictstyle = diff3
+[rerere]
+	enabled = true
+[mergetool]
+	keepBackup = true
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[commit]
+	gpgsign = true
+[alias]
+	st = status -sb
+	co = checkout
+	br = branch
+	lg = log --oneline --graph --decorate

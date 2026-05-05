@@ -1,0 +1,86 @@
+#!/bin/sh
+
+# Orchestrator: runs all setup scripts in the correct order.
+# Each category script prompts for confirmation individually.
+
+# Source directory (chezmoi may not be in PATH during bootstrap)
+SCRIPTS_DIR="${HOME}/.local/share/chezmoi/scripts"
+
+set -e
+
+echo "=== Workstation Setup ==="
+echo ""
+
+# 1. Install Homebrew (required by everything else)
+echo "--- Homebrew ---"
+sh "${SCRIPTS_DIR}/install-homebrew.sh"
+
+# Add brew to PATH for all subsequent scripts
+if [ -f /opt/homebrew/bin/brew ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -f /usr/local/bin/brew ]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+# 2. Replace bootstrapped chezmoi with Homebrew version
+echo ""
+echo "--- Cleanup ---"
+sh "${SCRIPTS_DIR}/cleanup-chezmoi.sh"
+
+# 3. Install Mac App Store apps (includes Xcode, needed by SwiftLint)
+echo ""
+echo "--- Mac App Store ---"
+sh "${SCRIPTS_DIR}/install-mas-apps.sh" || true
+
+# 4. Prompt user to open Xcode and accept license if it was freshly installed
+if [ -f "${HOME}/.setup-xcode-installed" ]; then
+    rm -f "${HOME}/.setup-xcode-installed"
+    echo ""
+    echo "⚠ Xcode was installed. Please open it and agree to the license before continuing."
+    printf "Press Enter when done (or 's' to skip)... "
+    read -r response
+    if [ "$response" = "s" ]; then
+        echo "Skipping Xcode license check."
+    else
+        if ! xcodebuild -checkFirstLaunchStatus >/dev/null 2>&1; then
+            echo "Xcode license may not be accepted yet. Some tools may fail."
+        else
+            echo "Xcode license accepted."
+        fi
+    fi
+fi
+
+# 5. Install packages by category
+echo ""
+echo "--- CLI Tools ---"
+sh "${SCRIPTS_DIR}/install-cli-tools.sh" || true
+
+echo ""
+echo "--- Browsers ---"
+sh "${SCRIPTS_DIR}/install-browsers.sh" || true
+
+echo ""
+echo "--- Applications ---"
+sh "${SCRIPTS_DIR}/install-applications.sh" || true
+
+echo ""
+echo "--- Making ---"
+sh "${SCRIPTS_DIR}/install-making.sh" || true
+
+# 6. Generate SSH keys via 1Password (needs 1Password installed and signed in)
+echo ""
+echo "--- SSH Keys ---"
+sh "${SCRIPTS_DIR}/setup-ssh-keys.sh" || true
+
+# 7. System tweaks
+echo ""
+echo "--- System Tweaks ---"
+sh "${SCRIPTS_DIR}/system-tweaks.sh" || true
+
+# 8. Subfolder structure in Documents
+echo ""
+echo "--- Create Documents Subfolders ---"
+mkdir -p ${HOME}/Documents/{Archive,Resources,Temp} \
+         ${HOME}/Documents/Projects/{3D-Printing,Audio,Code,Video}
+
+echo "=== Workstation setup complete! ==="

@@ -1,0 +1,18 @@
+#!/bin/sh
+# Ensures the 1Password SSH agent Host * block is present.
+# User-added hosts are preserved across chezmoi apply.
+# Receives current file on stdin, outputs result to stdout.
+
+BLOCK='Host *
+ IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+ SetEnv TERM=xterm-256color'
+
+# Read existing content, strip any Host * block, append fresh one
+ ExistingContent=$(cat 2>/dev/null || true)
+ Stripped=$(printf '%s' "$ExistingContent" | sed '/^Host \*/,$ d' | sed -e :a -e '/^\n*$/{$d;N;ba' -e '}')
+
+if [ -z "$Stripped" ]; then
+    printf '%s\n' "$BLOCK"
+else
+    printf '%s\n\n%s\n' "$Stripped" "$BLOCK"
+fi

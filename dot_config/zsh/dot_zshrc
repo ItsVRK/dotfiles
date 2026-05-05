@@ -1,0 +1,27 @@
+# Starship is a minimal, blazing-fast, and infinitely customizable prompt for any shell
+eval "$(starship init zsh)"
+
+# Atuin: shell history
+eval "$(atuin init zsh)"
+
+export PATH="$HOME/.local/bin:$PATH"
+
+# This replaces NVM, rbenv, pyenv, and can manage bun, pnpm, uv etc.
+eval "$(mise activate zsh)"
+
+# Docker completions
+fpath=($HOME/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+
+# Safe launch (sandbox)
+alias opencode='safehouse --workdir "$(pwd)" opencode'
+alias pi='safehouse --workdir "$(pwd)" pi'
+# Use the following to launch without sandbox
+# command opencode
+# command pi
+
+# Full secure launch (secrets + sandbox) // Requires .env.1p file in launch dir
+alias sopencode='op run --env-file=.env.1p -- safehouse --workdir "$(pwd)" opencode'
+alias spi='op run --env-file=.env.1p -- safehouse --workdir "$(pwd)" pi'
