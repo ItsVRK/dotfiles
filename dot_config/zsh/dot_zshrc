@@ -16,12 +16,9 @@ compinit
 # End of Docker CLI completions
 
 # Safe launch (sandbox)
-alias opencode='safehouse --workdir "$(pwd)" opencode'
-alias pi='safehouse --workdir "$(pwd)" pi'
+alias pi='safehouse --add-dirs="$HOME/.pi/agent" --workdir "$(pwd)" mise exec node@24 -- pi'
 # Use the following to launch without sandbox
-# command opencode
 # command pi
 
 # Full secure launch (secrets + sandbox) // Requires .env.1p file in launch dir
-alias sopencode='op run --env-file=.env.1p -- safehouse --workdir "$(pwd)" opencode'
-alias spi='op run --env-file=.env.1p -- safehouse --workdir "$(pwd)" pi'
+alias spi='op run --env-file=.env.1p -- safehouse --add-dirs="$HOME/.pi/agent" --workdir "$(pwd)" mise exec node@24 -- pi'
