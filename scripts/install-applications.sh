@@ -14,6 +14,7 @@ ITEMS=(
   "Beyond Compare|https://www.scootersoftware.com/|Compare files and folders"
   "Cardhop|https://flexibits.com/cardhop|Menu bar contacts manager"
   "Chipmunk|https://github.com/esrlabs/chipmunk/|Log analysis tool"
+  "cmux|https://www.cmux.dev/|Ghostty-based terminal with vertical tabs and notifications for AI coding agents"
   "Cyberduck|https://cyberduck.io/|Server and cloud storage browser (FTP, etc)"
   "Discord|https://discord.com/|Voice and text chat"
   "Docker Desktop|https://www.docker.com/products/docker-desktop/|Containerization software for developers"
@@ -69,6 +70,7 @@ else
       "Calendar-366") echo "  Installing Calendar-366..."; brew install --cask calendar-366 || echo "    Failed" ;;
       "Cardhop") echo "  Installing Cardhop..."; brew install --cask cardhop || echo "    Failed" ;;
       "Chipmunk") echo "  Installing Chipmunk..."; brew install --cask chipmunk || echo "    Failed" ;;
+      "cmux") echo "  Installing cmux..."; brew install --cask cmux || echo "    Failed" ;;
       "Cyberduck") echo "  Installing Cyberduck..."; brew install --cask cyberduck || echo "    Failed" ;;
       "Discord") echo "  Installing Discord..."; brew install --cask discord || echo "    Failed" ;;
       "Docker Desktop") echo "  Installing Docker Desktop..."; brew install docker-desktop || echo "    Failed" ;;

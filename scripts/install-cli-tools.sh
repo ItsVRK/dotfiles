@@ -8,9 +8,9 @@ ITEMS=(
   "Atuin|https://atuin.sh/|Shell history"
   "DDEV|https://ddev.com/|Docker based PHP development environments"
   "Git|https://git-scm.com/|Version control"
+  "Lazygit|https://github.com/jesseduffield/lazygit/|Simple terminal UI for git commands"
   "Lagoon CLI|https://uselagoon.github.io/lagoon-cli/|CLI tool for amazee hosting"
   "Mise|https://mise.jdx.dev/|Polyglot tool version manager (replaces asdf, nvm, pyenv, etc.)"
-  "Opencode|https://opencode.ai/|AI coding agent for terminal"
   "Pi|https://pi.dev|AI coding agent harness (via npm)"
   "Safehouse|https://agent-safehouse.dev/|macOS-native sandboxing for local agents"
   "Starling|https://github.com/Ryandonofrio3/Starling|Local only AI Voice-to-Text & Paste"
@@ -45,9 +45,9 @@ else
       "Atuin") echo "  Installing Atuin..."; brew install atuin || echo "    Failed" ;;
       "DDEV") echo "  Installing DDEV..."; brew install ddev/ddev/ddev || echo "    Failed" ;;
       "Git") echo "  Installing Git..."; brew install git || echo "    Failed" ;;
+      "Lazygit") echo "  Installing Lazygit..."; brew install lazygit || echo "    Failed" ;;
       "Lagoon CLI") echo "  Installing Lagoon CLI..."; brew install uselagoon/lagoon-cli/lagoon || echo "    Failed" ;;
       "Mise") echo "  Installing Mise..."; brew install mise || echo "    Failed" ;;
-      "Opencode") echo "  Installing Opencode..."; brew install anomalyco/tap/opencode || echo "    Failed" ;;
       "Safehouse") echo "  Installing Safehouse..."; brew install eugene1g/safehouse/agent-safehouse || echo "    Failed" ;;
       "Starling") echo "  Installing Starling..."; brew install Ryandonofrio3/starling/starling || echo "    Failed" ;;
       "Starship") echo "  Installing Starship..."; brew install starship || echo "    Failed" ;;
